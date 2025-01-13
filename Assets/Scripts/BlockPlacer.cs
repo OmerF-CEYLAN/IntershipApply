@@ -1,24 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static Unity.Collections.AllocatorManager;
 
 public class BlockPlacer : MonoBehaviour
 {
 
-    bool isDrawed = false;
-
     [SerializeField]
     Sprite[] sprites;
-
-    List<List<Vector2>> blockPoses = new List<List<Vector2>>();
-
-    Dictionary<Vector2, GameObject> posesAndBlocks;
-
-    [SerializeField]
-    private List<GameObject> blocks;
 
     [SerializeField]
     private GameObject blockPrefab;
@@ -29,66 +22,43 @@ public class BlockPlacer : MonoBehaviour
     [SerializeField]
     private int columnCount;
 
-    private 
+    Block[,] blocks;
+
+    Vector2[,] positions;
+
+    [SerializeField]
+    private float cubeDistance;
 
     void Start()
     {
 
-        for (int i = 0; i < rowCount; i++)
-        {
-            blockPoses.Add(new List<Vector2>());
-
-            for (int j = 0; j < columnCount; j++)
-            { 
-                blockPoses[i].Add(new Vector2(j*2.2f,i*2.2f));
-            }
-
-        }
-
-        Debug.Log(blockPoses.Count);
-
-        foreach (List<Vector2> poses in blockPoses)
-        {
-            foreach (Vector2 pos in poses)
-            {
-                blocks.Add(Instantiate(blockPrefab, pos, Quaternion.identity));
-            }
-            
-        }
-
+        SetBoard();
 
     }
 
 
     void Update()
     {
-        DrawPlus();
-    }
-
-    public void PlaceBlock()
-    {
-
         
     }
 
-    public void DrawPlus()
+    private void SetBoard()
     {
-        if (!isDrawed)
+        positions = new Vector2[rowCount, columnCount];
+
+        blocks = new Block[rowCount, columnCount];
+
+        for (int i = 0; i < rowCount; i++)
         {
-            int index;
-
-        label:
-            index = Random.Range(0, blocks.Count);
-
-            if (index % rowCount == 0 && index % rowCount == rowCount - 1 && index % columnCount == 0 && index % columnCount == columnCount - 1)
+            for (int j = 0; j < columnCount; j++)
             {
-                blocks[index].GetComponent<SpriteRenderer>().sprite = sprites[0];
-            }
-            else goto label;
+                positions[i, j] = new Vector2(j*cubeDistance, i*cubeDistance);
 
-            isDrawed = true;
+                blocks[i, j] = Instantiate(blockPrefab, positions[i, j], Quaternion.identity).GetComponent<Block>();
+            }
         }
-        
+
     }
+    
 
 }
