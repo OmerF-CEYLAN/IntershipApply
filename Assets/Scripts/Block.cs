@@ -7,9 +7,22 @@ public class Block : MonoBehaviour
 
     SpriteRenderer spriteRenderer;
 
+    [SerializeField]
+    private int rowNo,columnNo;
+
+    static Board board;
+
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
+    void Start()
+    {
+        board = FindAnyObjectByType<Board>();
+
+        SetSprite(board.GetRandomSprite());
+
     }
 
     // Update is called once per frame
@@ -18,14 +31,26 @@ public class Block : MonoBehaviour
         
     }
 
-    public void ChangeSprite(Sprite sprite)
+    public void SetSprite(Sprite sprite)
     {
         spriteRenderer.sprite = sprite;
     }
 
-    public void FallDown()
+    public void OnMouseUpAsButton()
     {
+        Destroy(gameObject);
+        NotifyBlockIsDestroyed();
+    }
 
+    public void SetRawAndColNo(int rowNo,int columnNo)
+    {
+        this.rowNo = rowNo;
+        this.columnNo = columnNo;
+    }
+
+    public void NotifyBlockIsDestroyed()
+    {
+        board.ObserveBlockChanges(rowNo, columnNo);
     }
 
 }

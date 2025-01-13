@@ -224,7 +224,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1366953485}
-  - component: {fileID: 1366953484}
+  - component: {fileID: 1366953486}
   m_Layer: 0
   m_Name: BlockPlacer
   m_TagString: Untagged
@@ -232,24 +232,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1366953484
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1366953483}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31d4186971cf25c4b80f3c4691090c5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sprites:
-  - {fileID: 21300000, guid: dc5774d1e0ec4a54ea891dbae12d9ebd, type: 3}
-  blockPrefab: {fileID: 5717990833704808773, guid: 6502e165257c390408bf9196ea5856e2, type: 3}
-  rowCount: 10
-  columnCount: 10
-  cubeDistance: 0.65
 --- !u!4 &1366953485
 Transform:
   m_ObjectHideFlags: 0
@@ -265,6 +247,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1366953486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1366953483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e88ed6871a240e46b8032e49730b2e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites:
+  - {fileID: 21300000, guid: a663f43e23bd85d429d87d2d028f7551, type: 3}
+  - {fileID: 21300000, guid: 1ac535ecc425fcb4ca00cdfe567c95a4, type: 3}
+  - {fileID: 21300000, guid: 9fd01eb57b12e5a47b38fc3b46fcb070, type: 3}
+  - {fileID: 21300000, guid: e83ad3b6148b9404e8de0da753b129ee, type: 3}
+  - {fileID: 21300000, guid: 0f05be38303ab904085d1815ab3301a7, type: 3}
+  - {fileID: 21300000, guid: 4b30c50213cda1146b3b0542e8ebf149, type: 3}
+  blockPrefab: {fileID: 5717990833704808773, guid: 6502e165257c390408bf9196ea5856e2, type: 3}
+  rowCount: 10
+  columnCount: 10
+  cubeDistance: 0.8
 --- !u!1001 &6881497102242693982
 PrefabInstance:
   m_ObjectHideFlags: 0
