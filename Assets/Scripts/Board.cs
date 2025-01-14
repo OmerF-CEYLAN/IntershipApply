@@ -78,10 +78,11 @@ public class Board : MonoBehaviour, IBoardObserver
 
     }
 
+
     public void ObserveBlockChanges(int rowOfBlock,int columnOfBlock)
     {
         CollapseBlocks(rowOfBlock,columnOfBlock);
-                FindBlockGroups();
+        
     }
 
     public void FindBlockGroups()
@@ -100,11 +101,11 @@ public class Board : MonoBehaviour, IBoardObserver
                     {
                         if(blocks[i, j + 1].GetGroup().Count > 1)
                         {
-                            foreach (Block item in blocks[i,j].GetGroup())
-                            {
-                                blocks[i,j + 1].GetGroup().Add(item);
-                                item.SetGroup(blocks[i,j + 1].GetGroup());
-                            }
+                            //foreach (Block item in blocks[i,j].GetGroup())
+                            //{
+                            //    blocks[i,j + 1].GetGroup().Add(item);
+                            //    item.SetGroup(blocks[i,j + 1].GetGroup());
+                            //}
                         }
                         else
                         {
@@ -138,11 +139,11 @@ public class Board : MonoBehaviour, IBoardObserver
                             //    blocks[i, j + 1].GetGroup().Add(item);
                             //    item.SetGroup(blocks[i, j + 1].GetGroup());
                             //}
-                            for (int k = 0; k < blocks[i, j].GetGroup().Count; k++)
-                            {
-                                blocks[i, j + 1].GetGroup().Add(blocks[i, j].GetGroup()[k]);
-                                blocks[i, j].GetGroup()[k].SetGroup(blocks[i, j + 1].GetGroup());
-                            }
+                            //for (int k = 0; k < blocks[i, j].GetGroup().Count; k++)
+                            //{
+                            //    blocks[i, j + 1].GetGroup().Add(blocks[i, j].GetGroup()[k]);
+                            //    blocks[i, j].GetGroup()[k].SetGroup(blocks[i, j + 1].GetGroup());
+                            //}
                         }
                         else
                         {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -45,8 +46,13 @@ public class Block : MonoBehaviour
         foreach (Block item in group)
         {
             if (item == this) continue;
+            item.NotifyBlockIsDestroyed();
             Destroy(item);
         }
+
+        NotifyBlockIsDestroyed();
+
+        NotifyToFindGroups();
 
         Destroy(gameObject);
 
@@ -61,6 +67,11 @@ public class Block : MonoBehaviour
     public void NotifyBlockIsDestroyed()
     {
         board.ObserveBlockChanges(rowNo, columnNo);
+    }
+
+    private void NotifyToFindGroups()
+    {
+        board.FindBlockGroups();
     }
 
     public string GetColor()
@@ -78,9 +89,5 @@ public class Block : MonoBehaviour
         this.group = group;
     }
 
-    private void OnDestroy()
-    {
-        NotifyBlockIsDestroyed();
-    }
 
 }
