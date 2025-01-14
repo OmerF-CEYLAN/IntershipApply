@@ -5,23 +5,31 @@ using UnityEngine;
 public class Block : MonoBehaviour
 {
 
-    SpriteRenderer spriteRenderer;
-
     [SerializeField]
     private int rowNo,columnNo;
 
     static Board board;
 
+    [SerializeField]
+    string color;
+
+    [SerializeField]
+    List<Block> group;
+
     void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        group = new List<Block>
+        {
+            this
+        };
+
+        color = tag;
+
     }
 
     void Start()
     {
         board = FindAnyObjectByType<Board>();
-
-        SetSprite(board.GetRandomSprite());
 
     }
 
@@ -31,15 +39,17 @@ public class Block : MonoBehaviour
         
     }
 
-    public void SetSprite(Sprite sprite)
-    {
-        spriteRenderer.sprite = sprite;
-    }
-
     public void OnMouseUpAsButton()
     {
+
+        foreach (Block item in group)
+        {
+            if (item == this) continue;
+            Destroy(item);
+        }
+
         Destroy(gameObject);
-        NotifyBlockIsDestroyed();
+
     }
 
     public void SetRawAndColNo(int rowNo,int columnNo)
@@ -51,6 +61,26 @@ public class Block : MonoBehaviour
     public void NotifyBlockIsDestroyed()
     {
         board.ObserveBlockChanges(rowNo, columnNo);
+    }
+
+    public string GetColor()
+    {
+        return color;
+    }
+
+    public List<Block> GetGroup()
+    {
+        return group;
+    }
+
+    public void SetGroup(List<Block> group)
+    {
+        this.group = group;
+    }
+
+    private void OnDestroy()
+    {
+        NotifyBlockIsDestroyed();
     }
 
 }
