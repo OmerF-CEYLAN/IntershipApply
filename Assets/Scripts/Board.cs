@@ -106,15 +106,17 @@ public class Board : MonoBehaviour
                     {
                         break;
                     }
-                    if (blocks[i, j].GetColor() == blocks[i, j + 1].GetColor())
+                    if ((blocks[i, j].GetColor() == blocks[i, j + 1].GetColor() && blocks[i, j].GetGroup() != blocks[i, j + 1].GetGroup()))
                     {
-                        if(blocks[i, j + 1].GetGroup().Count > 1)
+                        if (blocks[i, j + 1].GetGroup().Count > 1)
                         {
-                            //foreach (Block item in blocks[i,j].GetGroup())
-                            //{
-                            //    blocks[i,j + 1].GetGroup().Add(item);
-                            //    item.SetGroup(blocks[i,j + 1].GetGroup());
-                            //}
+                            foreach (Block item in blocks[i, j].GetGroup())
+                            {
+                                blocks[i, j + 1].GetGroup().Add(item);
+                                if (item == blocks[i, j]) continue;
+                                item.SetGroup(blocks[i, j + 1].GetGroup());
+                            }
+                            blocks[i, j].SetGroup(blocks[i, j + 1].GetGroup());
                         }
                         else
                         {
@@ -139,15 +141,17 @@ public class Board : MonoBehaviour
                         blocks[i, j].GetGroup().Add(blocks[i + 1, j]);
                         blocks[i + 1, j].SetGroup(blocks[i, j].GetGroup());
                     }
-                    if (blocks[i, j].GetColor() == blocks[i, j + 1].GetColor())
+                    if (blocks[i, j].GetColor() == blocks[i, j + 1].GetColor() && blocks[i, j].GetGroup() != blocks[i, j + 1].GetGroup())
                     {
                         if (blocks[i, j + 1].GetGroup().Count > 1)
                         {
-                            //foreach (Block item in blocks[i, j].GetGroup())
-                            //{
-                            //    blocks[i, j + 1].GetGroup().Add(item);
-                            //    item.SetGroup(blocks[i, j + 1].GetGroup());
-                            //}
+                            foreach (Block item in blocks[i, j].GetGroup())
+                            {
+                                blocks[i, j + 1].GetGroup().Add(item);
+                                if (item == blocks[i, j]) continue;
+                                item.SetGroup(blocks[i, j + 1].GetGroup());
+                            }
+                            blocks[i, j].SetGroup(blocks[i,j +1].GetGroup());
                             //for (int k = 0; k < blocks[i, j].GetGroup().Count; k++)
                             //{
                             //    blocks[i, j + 1].GetGroup().Add(blocks[i, j].GetGroup()[k]);
