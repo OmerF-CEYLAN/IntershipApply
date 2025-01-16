@@ -259,7 +259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e88ed6871a240e46b8032e49730b2e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blocksToCreate:
+  blocksTypes:
   - {fileID: 2695988610597667164, guid: c82737de2bc59e44f99020a4416ba167, type: 3}
   - {fileID: 9061657555113539912, guid: 3c8fa6855901ba8499e26c1880034820, type: 3}
   - {fileID: 3493030658517672084, guid: c77fbba0308b89141a2cf0cfc1ce71f1, type: 3}
@@ -269,6 +269,7 @@ MonoBehaviour:
   blockPrefab: {fileID: 5717990833704808773, guid: 6502e165257c390408bf9196ea5856e2, type: 3}
   rowCount: 10
   columnCount: 10
+  blockSpawnHeight: {x: 0, y: 2}
   cubeDistance: 0.8
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

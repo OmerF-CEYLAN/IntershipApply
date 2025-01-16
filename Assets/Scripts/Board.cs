@@ -9,7 +9,7 @@ using static UnityEditor.Progress;
 public class Board : MonoBehaviour
 {
     [SerializeField]
-    Block[] blocksToCreate;
+    Block[] blocksTypes;
 
     [SerializeField]
     private GameObject blockPrefab;
@@ -19,6 +19,9 @@ public class Board : MonoBehaviour
 
     [SerializeField]
     private int columnCount;
+
+    [SerializeField]
+    Vector2 blockSpawnHeight;
 
     Block[,] blocks;
 
@@ -53,7 +56,7 @@ public class Board : MonoBehaviour
             {
                 positions[i, j] = new Vector2(j * cubeDistance, i * cubeDistance);
 
-                blocks[i, j] = Instantiate(blocksToCreate[Random.Range(0, blocksToCreate.Length)], positions[i, j], Quaternion.identity);
+                blocks[i, j] = Instantiate(blocksTypes[Random.Range(0, blocksTypes.Length)], positions[i, j] + blockSpawnHeight, Quaternion.identity);
 
                 blocks[i, j].SetRawAndColNo(i, j);
 
@@ -66,19 +69,17 @@ public class Board : MonoBehaviour
         for (int i = row; i < rowCount; i++)
         {
             if (i == rowCount - 1)
-            {//Daha sonra fill with blocks ile yapýlacak
-                blocks[i,column] = Instantiate(blocksToCreate[Random.Range(0,blocksToCreate.Length)], positions[i, column], Quaternion.identity);
+            {
+                blocks[i,column] = Instantiate(blocksTypes[Random.Range(0,blocksTypes.Length)], positions[i, column] + blockSpawnHeight /* + new Vector2(0, cubeDistance * row)*/, Quaternion.identity);
             }
             else blocks[i, column] = blocks[i + 1, column];
-
-            blocks[i, column].gameObject.transform.position = positions[i, column];
 
             blocks[i,column].SetRawAndColNo(i,column);
 
         }  
 
     }
-
+    
 
     public void ObserveBlockChanges(int rowOfBlock,int columnOfBlock)
     {
@@ -152,11 +153,6 @@ public class Board : MonoBehaviour
                                 item.SetGroup(blocks[i, j + 1].GetGroup());
                             }
                             blocks[i, j].SetGroup(blocks[i,j +1].GetGroup());
-                            //for (int k = 0; k < blocks[i, j].GetGroup().Count; k++)
-                            //{
-                            //    blocks[i, j + 1].GetGroup().Add(blocks[i, j].GetGroup()[k]);
-                            //    blocks[i, j].GetGroup()[k].SetGroup(blocks[i, j + 1].GetGroup());
-                            //}
                         }
                         else
                         {
@@ -180,6 +176,11 @@ public class Board : MonoBehaviour
             b.SetGroup(b.GetGroup().Where(x => x == b).ToList());
            
         }
+    }
+
+    public Vector2[,] GetPositions()
+    {
+        return positions;
     }
 
 

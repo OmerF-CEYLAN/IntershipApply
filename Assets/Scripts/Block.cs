@@ -17,6 +17,11 @@ public class Block : MonoBehaviour
     [SerializeField]
     List<Block> group;
 
+    [SerializeField]
+    float _fallSpeed;
+
+    static float fallSpeed = 4;
+
     void Awake()
     {
         group = new List<Block>
@@ -34,10 +39,9 @@ public class Block : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+        FallDown();
     }
 
     public void OnMouseUpAsButton()
@@ -90,5 +94,12 @@ public class Block : MonoBehaviour
         this.group = group;
     }
 
+    public void FallDown()
+    {
+        if(transform.position.y != board.GetPositions()[rowNo,columnNo].y)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, board.GetPositions()[rowNo,columnNo],fallSpeed * Time.deltaTime);
+        }
+    }
 
 }
