@@ -47,13 +47,14 @@ public class Block : MonoBehaviour
         {
             if (item == this) continue;
             item.NotifyBlockIsDestroyed();
-            Destroy(item);
+            Destroy(item.gameObject);
+            Debug.Log("Destroyed");
         }
 
         NotifyBlockIsDestroyed();
 
         NotifyToFindGroups();
-
+        Debug.Log("Destroyed");
         Destroy(gameObject);
 
     }
@@ -71,7 +72,7 @@ public class Block : MonoBehaviour
 
     private void NotifyToFindGroups()
     {
-        board.FindBlockGroups();
+        board.ObserveBlockChanges();
     }
 
     public string GetColor()

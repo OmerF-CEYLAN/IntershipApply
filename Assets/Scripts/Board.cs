@@ -1,11 +1,12 @@
 using Assets.Scripts;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static Unity.Collections.AllocatorManager;
 using static UnityEditor.Progress;
 
-public class Board : MonoBehaviour, IBoardObserver
+public class Board : MonoBehaviour
 {
     [SerializeField]
     Block[] blocksToCreate;
@@ -85,6 +86,14 @@ public class Board : MonoBehaviour, IBoardObserver
         
     }
 
+    public void ObserveBlockChanges()
+    {
+        ClearBlockGroups();
+        FindBlockGroups();
+        
+    }
+
+
     public void FindBlockGroups()
     {
         for (int i = 0; i < rowCount; i++)
@@ -158,6 +167,15 @@ public class Board : MonoBehaviour, IBoardObserver
             }
         }
 
+    }
+
+    public void ClearBlockGroups()
+    {
+        foreach (Block b in blocks)
+        {
+            b.SetGroup(b.GetGroup().Where(x => x == b).ToList());
+           
+        }
     }
 
 
