@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Windows;
 using static Unity.Collections.AllocatorManager;
 using static UnityEditor.Progress;
 
@@ -33,6 +34,12 @@ public class Board : MonoBehaviour
 
     static float[] spawnHeight;
 
+    [SerializeField]
+    internal List<Sprite> sprites;
+
+    [SerializeField]
+    SpriteHolder spriteHolder;
+
     void Start()
     {
 
@@ -41,6 +48,7 @@ public class Board : MonoBehaviour
 
         spawnHeight = new float[columnCount];
 
+        SetSpritesBasedOnGroups();
     }
 
 
@@ -97,8 +105,10 @@ public class Board : MonoBehaviour
     {
         ClearBlockGroups();
         FindBlockGroups();
+
         Array.Clear(spawnHeight,0,spawnHeight.Length);
-        
+
+        SetSpritesBasedOnGroups();
     }
 
 
@@ -188,6 +198,15 @@ public class Board : MonoBehaviour
     public Vector2[,] GetPositions()
     {
         return positions;
+    }
+
+    void SetSpritesBasedOnGroups()
+    {
+        foreach (Block item in blocks)
+        {
+            Sprite[] currentSpriteArray = spriteHolder.GetSpriteArrayOfColor(item.GetColor());
+            item.SetSprite(currentSpriteArray);
+        }
     }
 
 

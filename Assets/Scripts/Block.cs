@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Block : MonoBehaviour
@@ -24,6 +25,14 @@ public class Block : MonoBehaviour
 
     static bool isAllowedToTouch;
 
+    Sprite blockSprite;
+
+    static int maxCountForDefault, maxCountForSpriteA, maxCountForSpriteB;
+
+    static int minCountToCollapse;
+
+    //static is allowed for must be added while collapsing
+
     void Awake()
     {
         group = new List<Block>
@@ -33,6 +42,13 @@ public class Block : MonoBehaviour
 
         color = tag;
 
+        blockSprite = GetComponent<SpriteRenderer>().sprite;
+
+        minCountToCollapse = 2;
+
+        maxCountForDefault = 4;
+        maxCountForSpriteA = 7;
+        maxCountForSpriteB = 9;
     }
 
     void Start()
@@ -43,25 +59,35 @@ public class Block : MonoBehaviour
 
     void FixedUpdate()
     {
+        GetComponent<SpriteRenderer>().sortingOrder = rowNo;
+
         FallDown();
     }
 
     public void OnMouseUpAsButton()
     {
+        if (group.Count < minCountToCollapse)
+            isAllowedToTouch = false;
+        else
+            isAllowedToTouch = true;
 
-        foreach (Block item in group)
+        if (isAllowedToTouch)
         {
-            if (item == this) continue;
-            item.NotifyBlockIsDestroyed();
-            Destroy(item.gameObject);
+            foreach (Block item in group)
+            {
+                if (item == this) continue;
+                item.NotifyBlockIsDestroyed();
+                Destroy(item.gameObject);
+                Debug.Log("Destroyed");
+            }
+
+            NotifyBlockIsDestroyed();
+
+            NotifyToFindGroups();
             Debug.Log("Destroyed");
+            Destroy(gameObject);
         }
 
-        NotifyBlockIsDestroyed();
-
-        NotifyToFindGroups();
-        Debug.Log("Destroyed");
-        Destroy(gameObject);
 
     }
 
@@ -102,6 +128,32 @@ public class Block : MonoBehaviour
         {
             transform.position = Vector2.MoveTowards(transform.position, board.GetPositions()[rowNo,columnNo],fallSpeed * Time.deltaTime);
         }
+    }
+
+    public void SetSprite(Sprite[] spriteArray)
+    {
+
+        if (group.Count > maxCountForSpriteB)
+        {
+            blockSprite = spriteArray[3];
+        }
+        else if (group.Count > maxCountForSpriteA)
+        {
+            blockSprite = spriteArray[2];
+        }
+        else if (group.Count > maxCountForDefault)
+        {
+            blockSprite = spriteArray[1];
+        }
+        else
+        {
+            blockSprite = spriteArray[0];
+        }
+
+        GetComponent<SpriteRenderer>().sprite = blockSprite;
+
+
+
     }
 
 }

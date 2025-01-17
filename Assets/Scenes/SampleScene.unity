@@ -123,6 +123,80 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &440806690
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 440806692}
+  - component: {fileID: 440806691}
+  m_Layer: 0
+  m_Name: SpriteHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &440806691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 440806690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8105bb45198ec6b49a9b0b0fac8aa5c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  redSprites:
+  - {fileID: 21300000, guid: 0f05be38303ab904085d1815ab3301a7, type: 3}
+  - {fileID: 21300000, guid: 215f865d66b5e384ba02c5381d8299ec, type: 3}
+  - {fileID: 21300000, guid: 43243ac79d24d2847997f765524c1b05, type: 3}
+  - {fileID: 21300000, guid: dc5774d1e0ec4a54ea891dbae12d9ebd, type: 3}
+  greenSprites:
+  - {fileID: 21300000, guid: 1ac535ecc425fcb4ca00cdfe567c95a4, type: 3}
+  - {fileID: 21300000, guid: 9b633c72b9517784282b04e62704f201, type: 3}
+  - {fileID: 21300000, guid: 36158c268aba95449b1a6b5fcbeedb06, type: 3}
+  - {fileID: 21300000, guid: e6a91b1f0f92ecb4fa5c0ae519169b7a, type: 3}
+  blueSprites:
+  - {fileID: 21300000, guid: a663f43e23bd85d429d87d2d028f7551, type: 3}
+  - {fileID: 21300000, guid: ba5de96ed9c309c47a7da462419c66e2, type: 3}
+  - {fileID: 21300000, guid: f24097c6e12c222459dd45c716fdd307, type: 3}
+  - {fileID: 21300000, guid: 8e04ecde66ca0994790167dfacf550ce, type: 3}
+  yellowSprites:
+  - {fileID: 21300000, guid: 4b30c50213cda1146b3b0542e8ebf149, type: 3}
+  - {fileID: 21300000, guid: 05c3590cefbf72347901ae5a824275b1, type: 3}
+  - {fileID: 21300000, guid: b456444a3fcdb364887ccbd47a8503e0, type: 3}
+  - {fileID: 21300000, guid: d09562bede080ee41a561b079ac7c1ac, type: 3}
+  purpleSprites:
+  - {fileID: 21300000, guid: e83ad3b6148b9404e8de0da753b129ee, type: 3}
+  - {fileID: 21300000, guid: 6fbe8e227ae5ff24f806676ef0f36ed1, type: 3}
+  - {fileID: 21300000, guid: 3f105f566450a7f48bb1d4688aa4308e, type: 3}
+  - {fileID: 21300000, guid: f89c91564d7b3b04aa3a608150934e06, type: 3}
+  pinkSprites:
+  - {fileID: 21300000, guid: 9fd01eb57b12e5a47b38fc3b46fcb070, type: 3}
+  - {fileID: 21300000, guid: 572805142bf309842a04508cb825a476, type: 3}
+  - {fileID: 21300000, guid: 57eeb1a48f1b20e45ad8718a9763d062, type: 3}
+  - {fileID: 21300000, guid: e99462295a2d6f94f85184d45cb861b9, type: 3}
+--- !u!4 &440806692
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 440806690}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.375912, y: 6.9133887, z: 0.016647117}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -270,10 +344,37 @@ MonoBehaviour:
   rowCount: 10
   columnCount: 10
   blockSpawnHeight: {x: 0, y: 5}
-  blockDistance: 0.8
+  blockDistance: 0.7
+  sprites:
+  - {fileID: 21300000, guid: a663f43e23bd85d429d87d2d028f7551, type: 3}
+  - {fileID: 21300000, guid: ba5de96ed9c309c47a7da462419c66e2, type: 3}
+  - {fileID: 21300000, guid: f24097c6e12c222459dd45c716fdd307, type: 3}
+  - {fileID: 21300000, guid: 8e04ecde66ca0994790167dfacf550ce, type: 3}
+  - {fileID: 21300000, guid: 1ac535ecc425fcb4ca00cdfe567c95a4, type: 3}
+  - {fileID: 21300000, guid: 9b633c72b9517784282b04e62704f201, type: 3}
+  - {fileID: 21300000, guid: 36158c268aba95449b1a6b5fcbeedb06, type: 3}
+  - {fileID: 21300000, guid: e6a91b1f0f92ecb4fa5c0ae519169b7a, type: 3}
+  - {fileID: 21300000, guid: 9fd01eb57b12e5a47b38fc3b46fcb070, type: 3}
+  - {fileID: 21300000, guid: 572805142bf309842a04508cb825a476, type: 3}
+  - {fileID: 21300000, guid: 57eeb1a48f1b20e45ad8718a9763d062, type: 3}
+  - {fileID: 21300000, guid: e99462295a2d6f94f85184d45cb861b9, type: 3}
+  - {fileID: 21300000, guid: e83ad3b6148b9404e8de0da753b129ee, type: 3}
+  - {fileID: 21300000, guid: 6fbe8e227ae5ff24f806676ef0f36ed1, type: 3}
+  - {fileID: 21300000, guid: 3f105f566450a7f48bb1d4688aa4308e, type: 3}
+  - {fileID: 21300000, guid: f89c91564d7b3b04aa3a608150934e06, type: 3}
+  - {fileID: 21300000, guid: 0f05be38303ab904085d1815ab3301a7, type: 3}
+  - {fileID: 21300000, guid: 215f865d66b5e384ba02c5381d8299ec, type: 3}
+  - {fileID: 21300000, guid: 43243ac79d24d2847997f765524c1b05, type: 3}
+  - {fileID: 21300000, guid: dc5774d1e0ec4a54ea891dbae12d9ebd, type: 3}
+  - {fileID: 21300000, guid: 4b30c50213cda1146b3b0542e8ebf149, type: 3}
+  - {fileID: 21300000, guid: 05c3590cefbf72347901ae5a824275b1, type: 3}
+  - {fileID: 21300000, guid: b456444a3fcdb364887ccbd47a8503e0, type: 3}
+  - {fileID: 21300000, guid: d09562bede080ee41a561b079ac7c1ac, type: 3}
+  spriteHolder: {fileID: 440806691}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 1366953485}
+  - {fileID: 440806692}
