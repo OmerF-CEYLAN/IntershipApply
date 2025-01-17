@@ -1,4 +1,5 @@
 using Assets.Scripts;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,13 +29,17 @@ public class Board : MonoBehaviour
     Vector2[,] positions;
 
     [SerializeField]
-    private float cubeDistance;
+    private float blockDistance;
+
+    static float[] spawnHeight;
 
     void Start()
     {
 
         SetBoard();
         FindBlockGroups();
+
+        spawnHeight = new float[columnCount];
 
     }
 
@@ -54,9 +59,9 @@ public class Board : MonoBehaviour
         {
             for (int j = 0; j < columnCount; j++)
             {
-                positions[i, j] = new Vector2(j * cubeDistance, i * cubeDistance);
+                positions[i, j] = new Vector2(j * blockDistance, i * blockDistance);
 
-                blocks[i, j] = Instantiate(blocksTypes[Random.Range(0, blocksTypes.Length)], positions[i, j] + blockSpawnHeight, Quaternion.identity);
+                blocks[i, j] = Instantiate(blocksTypes[UnityEngine.Random.Range(0, blocksTypes.Length)], positions[i, j] + blockSpawnHeight, Quaternion.identity);
 
                 blocks[i, j].SetRawAndColNo(i, j);
 
@@ -70,7 +75,8 @@ public class Board : MonoBehaviour
         {
             if (i == rowCount - 1)
             {
-                blocks[i,column] = Instantiate(blocksTypes[Random.Range(0,blocksTypes.Length)], positions[i, column] + blockSpawnHeight /* + new Vector2(0, cubeDistance * row)*/, Quaternion.identity);
+                blocks[i,column] = Instantiate(blocksTypes[UnityEngine.Random.Range(0,blocksTypes.Length)], positions[i, column] + new Vector2(0f, 5f + spawnHeight[column]) /*positions[i, column] + blockSpawnHeight  + new Vector2(0, cubeDistance * row)*/, Quaternion.identity);
+                spawnHeight[column] += blockDistance;
             }
             else blocks[i, column] = blocks[i + 1, column];
 
@@ -91,6 +97,7 @@ public class Board : MonoBehaviour
     {
         ClearBlockGroups();
         FindBlockGroups();
+        Array.Clear(spawnHeight,0,spawnHeight.Length);
         
     }
 

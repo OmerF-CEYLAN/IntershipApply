@@ -22,6 +22,8 @@ public class Block : MonoBehaviour
 
     static float fallSpeed = 4;
 
+    static bool isAllowedToTouch;
+
     void Awake()
     {
         group = new List<Block>

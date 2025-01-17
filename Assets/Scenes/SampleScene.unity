@@ -269,8 +269,8 @@ MonoBehaviour:
   blockPrefab: {fileID: 5717990833704808773, guid: 6502e165257c390408bf9196ea5856e2, type: 3}
   rowCount: 10
   columnCount: 10
-  blockSpawnHeight: {x: 0, y: 2}
-  cubeDistance: 0.8
+  blockSpawnHeight: {x: 0, y: 5}
+  blockDistance: 0.8
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
