@@ -21,7 +21,7 @@ public class Block : MonoBehaviour
     [SerializeField]
     float _fallSpeed;
 
-    static float fallSpeed = 4;
+    static float fallSpeed = 6;
 
     static bool isAllowedToTouch;
 
@@ -78,13 +78,11 @@ public class Block : MonoBehaviour
                 if (item == this) continue;
                 item.NotifyBlockIsDestroyed();
                 Destroy(item.gameObject);
-                Debug.Log("Destroyed");
             }
 
             NotifyBlockIsDestroyed();
 
             NotifyToFindGroups();
-            Debug.Log("Destroyed");
             Destroy(gameObject);
         }
 

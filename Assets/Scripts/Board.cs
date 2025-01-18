@@ -109,6 +109,9 @@ public class Board : MonoBehaviour
         Array.Clear(spawnHeight,0,spawnHeight.Length);
 
         SetSpritesBasedOnGroups();
+
+        DetectDeadLock();
+
     }
 
 
@@ -207,6 +210,26 @@ public class Board : MonoBehaviour
             Sprite[] currentSpriteArray = spriteHolder.GetSpriteArrayOfColor(item.GetColor());
             item.SetSprite(currentSpriteArray);
         }
+    }
+
+    void DetectDeadLock()
+    {
+        foreach (Block item in blocks)
+        {
+            if (item.GetGroup().Count > 1)
+            {
+                return;
+                //no deadlock
+            }
+        }
+        Debug.LogError("Deadlock var");
+        Shuffle();
+
+    }
+
+    void Shuffle()
+    {
+
     }
 
 
