@@ -229,7 +229,102 @@ public class Board : MonoBehaviour
 
     void Shuffle()
     {
+        //string color;
 
+        //bool shuffleIsDone = false;
+
+        //List<string> selectedColors = new List<string>();
+
+        //Block temp;
+
+        //List<Block> blocksOfSameColor = new List<Block>();
+
+        //while (!shuffleIsDone)
+        //{
+        //    color = blocks[UnityEngine.Random.Range(0, rowCount), UnityEngine.Random.Range(0, columnCount)].GetColor();
+
+        //    if (selectedColors.Contains(color)) continue;
+
+        //    selectedColors.Add(color);
+
+        //    foreach (Block item in blocks)
+        //    {
+        //        if (item.GetColor() == color)
+        //        {
+        //            blocksOfSameColor.Add(item);
+        //        }
+        //    }
+        //    if (blocksOfSameColor.Count == 1)
+        //    {
+        //        blocksOfSameColor.Clear();
+        //        continue;
+        //    }
+
+        //    for (int i = 0; i < rowCount; i++)
+        //    {
+        //        for (int j = 0; j < blocksOfSameColor.Count; j++)
+        //        {
+        //            if(blocksOfSameColor.Count > columnCount)
+        //            {
+        //                if(j == columnCount)
+        //                {
+        //                    break;
+        //                }
+        //                temp = blocks[i, j];
+        //                SetSpecificBlock(blocksOfSameColor[blocksOfSameColor.Count - 1], temp);
+        //                blocks[i, j] = GetSpecificBlock(blocksOfSameColor[blocksOfSameColor.Count - 1]);
+        //                blocksOfSameColor.Remove(blocksOfSameColor[blocksOfSameColor.Count - 1]);
+        //            }
+        //            else
+        //            {
+        //                if (blocksOfSameColor.Count == 0)
+        //                {
+        //                    break;
+        //                }
+        //                temp = blocks[i, j];
+        //                SetSpecificBlock(blocksOfSameColor[blocksOfSameColor.Count - 1], temp);
+        //                blocks[i, j] = GetSpecificBlock(blocksOfSameColor[blocksOfSameColor.Count - 1]);
+        //                blocksOfSameColor.Remove(blocksOfSameColor[blocksOfSameColor.Count - 1]);
+        //            }
+
+
+        //        }
+        //    }
+
+        //    shuffleIsDone = true;
+
+        //}
+
+    }
+
+    Block GetSpecificBlock(Block block)
+    {
+        for (int i = 0; i < rowCount; i++)
+        {
+            for (int j = 0; j < columnCount; j++)
+            {
+                if (blocks[i, j] == block)
+                {
+                    return blocks[i, j];
+                }
+            }
+        }
+        return null;
+    }
+
+    void SetSpecificBlock(Block blockToChange, Block blockToCome)
+    {
+        for (int i = 0; i < rowCount; i++)
+        {
+            for (int j = 0; j < columnCount; j++)
+            {
+                if (blocks[i, j] == blockToChange)
+                {
+                    blocks[i, j] = blockToCome;
+                    return;
+                }
+            }
+        }
     }
 
 
