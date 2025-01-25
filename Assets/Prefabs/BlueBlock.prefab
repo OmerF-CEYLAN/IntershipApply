@@ -48,6 +48,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5612711718334011918, guid: 6502e165257c390408bf9196ea5856e2, type: 3}
+      propertyPath: color
+      value: Blue
+      objectReference: {fileID: 0}
     - target: {fileID: 5717990833704808773, guid: 6502e165257c390408bf9196ea5856e2, type: 3}
       propertyPath: m_Name
       value: BlueBlock

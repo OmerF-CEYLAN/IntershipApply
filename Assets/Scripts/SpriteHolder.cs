@@ -14,7 +14,6 @@ public class SpriteHolder : MonoBehaviour
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         

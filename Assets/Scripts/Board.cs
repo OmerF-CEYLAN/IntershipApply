@@ -40,6 +40,8 @@ public class Board : MonoBehaviour
     [SerializeField]
     SpriteHolder spriteHolder;
 
+    List<Block>[] blocksByColor;
+
     void Start()
     {
 
@@ -48,7 +50,16 @@ public class Board : MonoBehaviour
 
         spawnHeight = new float[columnCount];
 
+        blocksByColor = new List<Block>[blocksTypes.Count()];
+
+        for (int i = 0; i < blocksByColor.Length; i++)
+        {
+            blocksByColor[i] = new List<Block>();
+        }
+
         SetSpritesBasedOnGroups();
+
+        SortByColor();
     }
 
 
@@ -109,6 +120,8 @@ public class Board : MonoBehaviour
         Array.Clear(spawnHeight,0,spawnHeight.Length);
 
         SetSpritesBasedOnGroups();
+
+        SortByColor();
 
         DetectDeadLock();
 
@@ -229,6 +242,22 @@ public class Board : MonoBehaviour
 
     void Shuffle()
     {
+
+        List<Block> temp = new List<Block>();
+
+        while (temp.Count <= 1)
+        {
+            temp = blocksByColor[UnityEngine.Random.Range(0, blocksByColor.Length)];
+        }
+
+        //önce random karýþtýr.
+
+        for (int i = 0; i < UnityEngine.Random.Range(2,temp.Count); i++)
+        {
+            //karýþtýrmadan sonra ayný renklten bir kaç kareyi patlayacak þekilde diz.
+        }
+
+
         //string color;
 
         //bool shuffleIsDone = false;
@@ -294,6 +323,52 @@ public class Board : MonoBehaviour
         //    shuffleIsDone = true;
 
         //}
+
+    }
+
+    void SortByColor()
+    {
+
+        foreach (List<Block> item in blocksByColor)
+        {
+            item.Clear();
+        }
+
+        for (int i = 0; i < rowCount; i++)
+        {
+            for (int j = 0; j < columnCount; j++)
+            {
+
+                if (blocks[i,j].GetColor() == blocksTypes[0].GetColor())
+                {
+                    blocksByColor[0].Add(blocks[i,j]);
+                }
+                else if (blocks[i, j].GetColor() == blocksTypes[1].GetColor())
+                {
+                    blocksByColor[1].Add(blocks[i, j]);
+                }
+                else if (blocks[i, j].GetColor() == blocksTypes[2].GetColor())
+                {
+                    blocksByColor[2].Add(blocks[i, j]);
+                }
+                else if (blocks[i, j].GetColor() == blocksTypes[3].GetColor())
+                {
+                    blocksByColor[3].Add(blocks[i, j]);
+                }
+                else if (blocks[i, j].GetColor() == blocksTypes[4].GetColor())
+                {
+                    blocksByColor[4].Add(blocks[i, j]);
+                }
+                else  if (blocks[i, j].GetColor() == blocksTypes[5].GetColor())
+                {
+                    blocksByColor[5].Add(blocks[i, j]);
+                }
+
+            }
+        }
+
+        Debug.Log("Blue = " + blocksByColor[0].Count + " Green = " + blocksByColor[1].Count + " Pink = " + blocksByColor[2].Count + " \n Purple = " + blocksByColor[3].Count
+            + "  Red = " + blocksByColor[4].Count + "  Yellow = " + blocksByColor[5].Count);
 
     }
 
