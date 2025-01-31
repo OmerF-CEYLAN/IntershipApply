@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.tvOS;
 using UnityEngine.Windows;
 using static Unity.Collections.AllocatorManager;
 using static UnityEditor.Progress;
@@ -60,6 +61,8 @@ public class Board : MonoBehaviour
         SetSpritesBasedOnGroups();
 
         SortByColor();
+
+        DetectDeadLock();
     }
 
 
@@ -236,8 +239,14 @@ public class Board : MonoBehaviour
             }
         }
         Debug.LogError("Deadlock var");
+
         Shuffle();
 
+        FindBlockGroups();
+
+        SetSpritesBasedOnGroups();
+
+        SortByColor();
     }
 
     void Shuffle()
@@ -247,82 +256,31 @@ public class Board : MonoBehaviour
 
         while (temp.Count <= 1)
         {
-            temp = blocksByColor[UnityEngine.Random.Range(0, blocksByColor.Length)];
+            temp = blocksByColor[UnityEngine.Random.Range(0, blocksByColor.Length)]; //random color group with more then 2 blocks will be selected.
         }
 
         //önce random karýþtýr.
 
+        int randomRow,randomColumn;
+
+        randomRow = UnityEngine.Random.Range(0, rowCount);
+        randomColumn = UnityEngine.Random.Range(0, columnCount);
+
+
         for (int i = 0; i < UnityEngine.Random.Range(2,temp.Count); i++)
         {
             //karýþtýrmadan sonra ayný renklten bir kaç kareyi patlayacak þekilde diz.
+
+            if (blocks[randomRow,randomColumn] != null && i == 0)
+            {
+                SwapBlocks(temp[i].rowNo, temp[i].columnNo, randomRow, randomColumn);
+            }
+            else
+            {
+                SwapOneOfTheBlocksAround(temp[i].rowNo, temp[i].columnNo, randomRow, randomColumn);
+            }
+
         }
-
-
-        //string color;
-
-        //bool shuffleIsDone = false;
-
-        //List<string> selectedColors = new List<string>();
-
-        //Block temp;
-
-        //List<Block> blocksOfSameColor = new List<Block>();
-
-        //while (!shuffleIsDone)
-        //{
-        //    color = blocks[UnityEngine.Random.Range(0, rowCount), UnityEngine.Random.Range(0, columnCount)].GetColor();
-
-        //    if (selectedColors.Contains(color)) continue;
-
-        //    selectedColors.Add(color);
-
-        //    foreach (Block item in blocks)
-        //    {
-        //        if (item.GetColor() == color)
-        //        {
-        //            blocksOfSameColor.Add(item);
-        //        }
-        //    }
-        //    if (blocksOfSameColor.Count == 1)
-        //    {
-        //        blocksOfSameColor.Clear();
-        //        continue;
-        //    }
-
-        //    for (int i = 0; i < rowCount; i++)
-        //    {
-        //        for (int j = 0; j < blocksOfSameColor.Count; j++)
-        //        {
-        //            if(blocksOfSameColor.Count > columnCount)
-        //            {
-        //                if(j == columnCount)
-        //                {
-        //                    break;
-        //                }
-        //                temp = blocks[i, j];
-        //                SetSpecificBlock(blocksOfSameColor[blocksOfSameColor.Count - 1], temp);
-        //                blocks[i, j] = GetSpecificBlock(blocksOfSameColor[blocksOfSameColor.Count - 1]);
-        //                blocksOfSameColor.Remove(blocksOfSameColor[blocksOfSameColor.Count - 1]);
-        //            }
-        //            else
-        //            {
-        //                if (blocksOfSameColor.Count == 0)
-        //                {
-        //                    break;
-        //                }
-        //                temp = blocks[i, j];
-        //                SetSpecificBlock(blocksOfSameColor[blocksOfSameColor.Count - 1], temp);
-        //                blocks[i, j] = GetSpecificBlock(blocksOfSameColor[blocksOfSameColor.Count - 1]);
-        //                blocksOfSameColor.Remove(blocksOfSameColor[blocksOfSameColor.Count - 1]);
-        //            }
-
-
-        //        }
-        //    }
-
-        //    shuffleIsDone = true;
-
-        //}
 
     }
 
@@ -387,20 +345,100 @@ public class Board : MonoBehaviour
         return null;
     }
 
-    void SetSpecificBlock(Block blockToChange, Block blockToCome)
+    void SwapBlocks(int rowToChange, int columnToChange, int rowToCome, int columnToCome)
     {
-        for (int i = 0; i < rowCount; i++)
-        {
-            for (int j = 0; j < columnCount; j++)
-            {
-                if (blocks[i, j] == blockToChange)
-                {
-                    blocks[i, j] = blockToCome;
-                    return;
-                }
-            }
-        }
+        Block temp;
+
+        temp = blocks[rowToChange, columnToChange];
+
+        blocks[rowToChange, columnToChange].SetRawAndColNo(rowToCome, columnToCome);
+
+        blocks[rowToChange, columnToChange] = blocks[rowToCome, columnToCome];
+
+        blocks[rowToCome, columnToCome].SetRawAndColNo(rowToChange, columnToChange);
+
+        blocks[rowToCome,columnToCome] = temp;
+
     }
+
+    void SwapOneOfTheBlocksAround(int rowToChange, int columnToChange, int rowToCome, int columnToCome)
+    {
+        bool isSwapDone = false;
+
+        int i = 0;
+
+        List<int> j = new List<int>{ 0, 1, 2, 3 };
+
+        List<int> temp = j;
+
+        if (rowToCome == 0)
+        {
+
+            // = new int[] { 0, 1, 3 };
+            j.Remove(2);
+
+        }
+        if (rowToCome == rowCount - 1)
+        {
+            j.Remove(0);
+
+        }
+        if(columnToCome == 0)
+        {
+            j.Remove(3);
+            //j = new int[] {0, 1, 2 };
+        }
+        if(columnToCome == columnCount - 1)
+        {
+            j.Remove(1);
+            //j = new int[] {0, 2, 3 };     
+        }
+
+        i = j[UnityEngine.Random.Range(0, j.Count)];
+
+
+        while (!isSwapDone)
+        {
+            
+
+            switch (i)
+            {
+                case 0:
+
+                    SwapBlocks(rowToChange, columnToChange, rowToCome + 1, columnToCome);
+                    isSwapDone = true;
+
+                    break;
+
+                case 1:
+
+                    SwapBlocks(rowToChange, columnToChange, rowToCome, columnToCome + 1);
+                    isSwapDone = true;
+
+                    break;
+
+                case 2:
+
+                    SwapBlocks(rowToChange, columnToChange, rowToCome - 1, columnToCome);
+                    isSwapDone = true;
+
+                    break;
+
+                case 3:
+
+                    SwapBlocks(rowToChange, columnToChange, rowToCome, columnToCome - 1);
+                    isSwapDone = true;
+
+                    break;
+            }
+
+        }
+
+        
+
+    }
+
+   
 
 
 }

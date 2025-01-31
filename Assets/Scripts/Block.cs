@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static Unity.Collections.AllocatorManager;
 
 public class Block : MonoBehaviour
 {
 
     [SerializeField]
-    private int rowNo,columnNo;
+    internal int rowNo,columnNo;
 
     static Board board;
 
@@ -125,6 +126,10 @@ public class Block : MonoBehaviour
         if(transform.position.y != board.GetPositions()[rowNo,columnNo].y)
         {
             transform.position = Vector2.MoveTowards(transform.position, board.GetPositions()[rowNo,columnNo],fallSpeed * Time.deltaTime);
+        }
+        if (transform.position.x != board.GetPositions()[rowNo, columnNo].x)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, board.GetPositions()[rowNo, columnNo], fallSpeed * Time.deltaTime);
         }
     }
 
