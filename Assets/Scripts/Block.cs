@@ -30,8 +30,6 @@ public class Block : MonoBehaviour
 
     static int maxCountForDefault, maxCountForSpriteA, maxCountForSpriteB;
 
-    static int minCountToCollapse;
-
     //static is allowed for must be added while collapsing
 
     void Awake()
@@ -44,8 +42,6 @@ public class Block : MonoBehaviour
         color = tag;
 
         blockSprite = GetComponent<SpriteRenderer>().sprite;
-
-        minCountToCollapse = 2;
 
         maxCountForDefault = 4;
         maxCountForSpriteA = 7;
@@ -67,7 +63,7 @@ public class Block : MonoBehaviour
 
     public void OnMouseUpAsButton()
     {
-        if (group.Count < minCountToCollapse)
+        if (group.Count < board.minCountToCollapse)
             isAllowedToTouch = false;
         else
             isAllowedToTouch = true;

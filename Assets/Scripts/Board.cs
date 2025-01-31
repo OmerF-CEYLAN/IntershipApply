@@ -44,7 +44,7 @@ public class Board : MonoBehaviour
     List<Block>[] blocksByColor;
 
     [SerializeField]
-    int minCountToBeCollapsed;
+    internal int minCountToCollapse;
 
     void Start()
     {
@@ -235,7 +235,7 @@ public class Board : MonoBehaviour
     {
         foreach (Block item in blocks)
         {
-            if (item.GetGroup().Count > 1)
+            if (item.GetGroup().Count >= minCountToCollapse)
             {
                 return;
                 //no deadlock
@@ -253,12 +253,10 @@ public class Board : MonoBehaviour
 
         List<Block> temp = new List<Block>();
 
-        while (temp.Count <= 1)
-        {
-            temp = blocksByColor[UnityEngine.Random.Range(0, blocksByColor.Length)]; //random color group with more then 2 blocks will be selected.
+        while (temp.Count < minCountToCollapse)
+        { // eðer blocksByColorda minCountToCollapse' e büyük eþit sayýda bir ayný renkli bloklar listesi yoksa durumunu da yaz.
+            temp = blocksByColor[UnityEngine.Random.Range(0, blocksByColor.Length)]; //random color group with more than minCountToCollapse blocks will be selected.
         }
-
-        //önce random karýþtýr.
 
         int randomRow,randomColumn;
 
@@ -266,9 +264,11 @@ public class Board : MonoBehaviour
         randomColumn = UnityEngine.Random.Range(0, columnCount);
 
 
-        for (int i = 0; i < UnityEngine.Random.Range(2,temp.Count); i++)
+        for (int i = 0; i < UnityEngine.Random.Range(minCountToCollapse,temp.Count); i++)
         {
             //karýþtýrmadan sonra ayný renklten bir kaç kareyi patlayacak þekilde diz.
+
+            //eðer random ile temp'teki kare ayný renkliyse swap yapma
 
             if (blocks[randomRow,randomColumn] != null && i == 0)
             {
@@ -280,6 +280,7 @@ public class Board : MonoBehaviour
             }
 
         }
+        ClearBlockGroups();
 
         FindBlockGroups();
 
@@ -335,21 +336,6 @@ public class Board : MonoBehaviour
 
     }
 
-    Block GetSpecificBlock(Block block)
-    {
-        for (int i = 0; i < rowCount; i++)
-        {
-            for (int j = 0; j < columnCount; j++)
-            {
-                if (blocks[i, j] == block)
-                {
-                    return blocks[i, j];
-                }
-            }
-        }
-        return null;
-    }
-
     void SwapBlocks(int rowToChange, int columnToChange, int rowToCome, int columnToCome)
     {
         Block temp;
@@ -367,7 +353,7 @@ public class Board : MonoBehaviour
     }
 
     void SwapOneOfTheBlocksAround(int rowToChange, int columnToChange, int rowToCome, int columnToCome)
-    {
+    {//Fonksiyon kümülatif deðil hep orjinin etrafýndaki bloklara bakýyor.
         bool isSwapDone = false;
 
         int i = 0;
@@ -442,13 +428,6 @@ public class Board : MonoBehaviour
         
 
     }
-
-    IEnumerator WaitForShuffle()
-    {
-        yield return new WaitForSeconds(3);
-    }
-
-   
 
 
 }
