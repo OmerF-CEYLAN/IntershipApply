@@ -43,6 +43,9 @@ public class Board : MonoBehaviour
 
     List<Block>[] blocksByColor;
 
+    [SerializeField]
+    int minCountToBeCollapsed;
+
     void Start()
     {
 
@@ -240,13 +243,9 @@ public class Board : MonoBehaviour
         }
         Debug.LogError("Deadlock var");
 
-        Shuffle();
+        Invoke("Shuffle",3f);
 
-        FindBlockGroups();
 
-        SetSpritesBasedOnGroups();
-
-        SortByColor();
     }
 
     void Shuffle()
@@ -281,6 +280,12 @@ public class Board : MonoBehaviour
             }
 
         }
+
+        FindBlockGroups();
+
+        SetSpritesBasedOnGroups();
+
+        SortByColor();
 
     }
 
@@ -436,6 +441,11 @@ public class Board : MonoBehaviour
 
         
 
+    }
+
+    IEnumerator WaitForShuffle()
+    {
+        yield return new WaitForSeconds(3);
     }
 
    
