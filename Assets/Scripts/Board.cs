@@ -241,7 +241,7 @@ public class Board : MonoBehaviour
                 //no deadlock
             }
         }
-        Debug.LogError("Deadlock var");
+        Debug.LogError("Deadlock occured");
 
         Invoke("Shuffle", 3f);
 
@@ -250,7 +250,6 @@ public class Board : MonoBehaviour
 
     void SystematicShuffle()
     {
-
         List<Block> temp = new List<Block>();
 
         while (temp.Count < minCountToCollapse)
@@ -428,6 +427,9 @@ public class Board : MonoBehaviour
 
     void Shuffle()
     {
+
+        //Shuffle is done randomly for once after the deadlock occurs.
+
         int randRow1, randRow2, randCol1, randCol2;
 
         int temp = blocks.Length;
@@ -459,7 +461,11 @@ public class Board : MonoBehaviour
             }
         }
 
-        Invoke("SystematicShuffle",3f);
+        //If deadlock stays even after the random shuffle then systematic shuffle is done to ensure atleast one collapsable group exists.
+
+        SystematicShuffle();
+
+        //Invoke("SystematicShuffle",3f); // It can be used to demonstrate systematic shuffle method better which will be executed after random shuffle process.
         
     }
 
