@@ -243,19 +243,19 @@ public class Board : MonoBehaviour
         }
         Debug.LogError("Deadlock var");
 
-        Invoke("Shuffle",3f);
+        Invoke("Shuffle", 3f);
 
 
     }
 
-    void Shuffle()
+    void SystematicShuffle()
     {
 
         List<Block> temp = new List<Block>();
 
         while (temp.Count < minCountToCollapse)
-        { // eðer blocksByColorda minCountToCollapse' e büyük eþit sayýda bir ayný renkli bloklar listesi yoksa durumunu da yaz.
-            temp = blocksByColor[UnityEngine.Random.Range(0, blocksByColor.Length)]; //random color group with more than minCountToCollapse blocks will be selected.
+        { // Maybe we should also consider the situation when there isn't any same color groups with more than minCountToCollapse. But in the case study minCountToCollapse is 2 that makes impossible for the situation to occur.
+            temp = blocksByColor[UnityEngine.Random.Range(0, blocksByColor.Length)]; //random color group with more than minCountToCollapse will be selected.
         }
 
         int randomRow,randomColumn;
@@ -266,9 +266,6 @@ public class Board : MonoBehaviour
 
         for (int i = 0; i < UnityEngine.Random.Range(minCountToCollapse,temp.Count); i++)
         {
-            //karýþtýrmadan sonra ayný renklten bir kaç kareyi patlayacak þekilde diz.
-
-            //eðer random ile temp'teki kare ayný renkliyse swap yapma
 
             if (blocks[randomRow,randomColumn] != null && i == 0)
             {
@@ -338,6 +335,10 @@ public class Board : MonoBehaviour
 
     void SwapBlocks(int rowToChange, int columnToChange, int rowToCome, int columnToCome)
     {
+
+        if (blocks[rowToChange, columnToChange].GetColor() == blocks[rowToCome, columnToCome].GetColor())
+            return;
+
         Block temp;
 
         temp = blocks[rowToChange, columnToChange];
@@ -364,25 +365,23 @@ public class Board : MonoBehaviour
 
         if (rowToCome == 0)
         {
-
-            // = new int[] { 0, 1, 3 };
             j.Remove(2);
-
+            //{ 0, 1, 3 };
         }
         if (rowToCome == rowCount - 1)
         {
             j.Remove(0);
-
+            //{1, 2, 3 };
         }
-        if(columnToCome == 0)
+        if (columnToCome == 0)
         {
             j.Remove(3);
-            //j = new int[] {0, 1, 2 };
+            //{0, 1, 2 };
         }
         if(columnToCome == columnCount - 1)
         {
             j.Remove(1);
-            //j = new int[] {0, 2, 3 };     
+            //{0, 2, 3 };     
         }
 
         i = j[UnityEngine.Random.Range(0, j.Count)];
@@ -395,39 +394,73 @@ public class Board : MonoBehaviour
             switch (i)
             {
                 case 0:
-
+                    //Swap with top
                     SwapBlocks(rowToChange, columnToChange, rowToCome + 1, columnToCome);
                     isSwapDone = true;
 
                     break;
 
                 case 1:
-
+                    //Swap with right
                     SwapBlocks(rowToChange, columnToChange, rowToCome, columnToCome + 1);
                     isSwapDone = true;
 
                     break;
 
                 case 2:
-
+                    //Swap with bottom
                     SwapBlocks(rowToChange, columnToChange, rowToCome - 1, columnToCome);
                     isSwapDone = true;
 
                     break;
 
                 case 3:
-
+                    //Swap with left
                     SwapBlocks(rowToChange, columnToChange, rowToCome, columnToCome - 1);
                     isSwapDone = true;
 
                     break;
             }
 
-        }
-
-        
+        }   
 
     }
 
+    void Shuffle()
+    {
+        int randRow1, randRow2, randCol1, randCol2;
+
+        int temp = blocks.Length;
+
+        for (int i = 0; i < blocks.Length; i++)
+        {
+
+            randRow1 = UnityEngine.Random.Range(0, rowCount);
+            randRow2 = UnityEngine.Random.Range(0, rowCount);
+            randCol1 = UnityEngine.Random.Range(0, columnCount);
+            randCol2 = UnityEngine.Random.Range(0, columnCount);
+
+            SwapBlocks(randRow1, randCol1, randRow2, randCol2);
+        }
+
+        ClearBlockGroups();
+
+        FindBlockGroups();
+
+        SetSpritesBasedOnGroups();
+
+        SortByColor();
+
+        foreach (Block item in blocks)
+        {
+            if (item.GetGroup().Count >= minCountToCollapse)
+            {
+                return;
+            }
+        }
+
+        Invoke("SystematicShuffle",3f);
+        
+    }
 
 }
