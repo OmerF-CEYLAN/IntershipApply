@@ -8,17 +8,6 @@ public class SpriteHolder : MonoBehaviour
     [SerializeField]
     internal Sprite[] redSprites, greenSprites, blueSprites,yellowSprites,purpleSprites,pinkSprites;
 
-
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
-
     public Sprite[] GetSpriteArrayOfColor(string color)
     {
         if (redSprites[0].name.Contains(color))

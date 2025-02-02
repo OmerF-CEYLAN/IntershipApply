@@ -30,8 +30,6 @@ public class Block : MonoBehaviour
 
     static int maxCountForDefault, maxCountForSpriteA, maxCountForSpriteB;
 
-    //static is allowed for must be added while collapsing
-
     void Awake()
     {
         group = new List<Block>

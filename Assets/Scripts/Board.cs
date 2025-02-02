@@ -353,7 +353,7 @@ public class Board : MonoBehaviour
     }
 
     void SwapOneOfTheBlocksAround(int rowToChange, int columnToChange, int rowToCome, int columnToCome)
-    {//Fonksiyon kümülatif deðil hep orjinin etrafýndaki bloklara bakýyor.
+    {//The method is not recursive which makes it always look around the same orjin block. This will work fine if minimum collapsable group is 2. But as the number increases errors will also occur more often.
         bool isSwapDone = false;
 
         int i = 0;
@@ -441,6 +441,9 @@ public class Board : MonoBehaviour
             randRow2 = UnityEngine.Random.Range(0, rowCount);
             randCol1 = UnityEngine.Random.Range(0, columnCount);
             randCol2 = UnityEngine.Random.Range(0, columnCount);
+
+            if (blocks[randRow1, randCol1].GetColor() == blocks[randRow2, randCol2].GetColor())
+                continue;
 
             SwapBlocks(randRow1, randCol1, randRow2, randCol2);
         }

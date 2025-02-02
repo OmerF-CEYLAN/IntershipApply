@@ -283,7 +283,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.08, z: -10}
+  m_LocalPosition: {x: 3, y: 4.08, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -341,8 +341,8 @@ MonoBehaviour:
   - {fileID: 3147687269772512132, guid: 581341f4df0844048971dbe6502bc3db, type: 3}
   - {fileID: 6027504249007736648, guid: 33d7a3f3b7533b146bb71589744d504a, type: 3}
   blockPrefab: {fileID: 5717990833704808773, guid: 6502e165257c390408bf9196ea5856e2, type: 3}
-  rowCount: 3
-  columnCount: 3
+  rowCount: 10
+  columnCount: 10
   blockSpawnHeight: {x: 0, y: 5}
   blockDistance: 0.7
   sprites:
